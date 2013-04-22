@@ -1,6 +1,7 @@
 
 import mtgox
 import datetime
+import time
 import sys
 # used to generate auth secret data
 import base64
@@ -132,9 +133,9 @@ class api:
 		))
 
 		# add nonce in args (this should be the highest resolution timer you can find)
-		# monotonic clock looks nice, but is python 3.3+ only
 		if auth:
-			args['nonce'] = int(int(datetime.datetime.utcnow().strftime('%Y%m%d%H%M%S%f')) / 1000)
+			now = datetime.datetime.now()
+			args['nonce'] = int(time.mktime(now.timetuple()) * 1e6 + now.microsecond) * 1000
 
 		# build the query string based on our arguments
 		query = function_map_run('urlencode', args).encode('utf-8')
