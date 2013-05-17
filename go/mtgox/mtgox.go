@@ -99,7 +99,7 @@ func (api Api) auth(request *Request) error {
 	}
 
 	// add the nonce value to the request parameters
-	request.Parameters.Add("nonce", strconv.FormatInt(time.Now().UnixNano(), 10))
+	request.Parameters.Add("tonce", strconv.FormatInt(time.Now().UnixNano() / 1000, 10))
 
 	// first decode secret
 	b64 := base64.StdEncoding

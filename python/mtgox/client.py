@@ -69,6 +69,7 @@ class api:
 		1: '_auth_basic',
 		2: '_auth_extended'
 	}
+	_host = "mtgox.com"
 
 	def __init__(self, api_key=None, api_secret=None):
 		self.api_key = api_key
@@ -128,14 +129,14 @@ class api:
 		# build the URL to call
 		url = function_map_run('urlunsplit', (
 			secure and 'https' or 'http',
-			auth and 'mtgox.com' or 'data.mtgox.com',
+			auth and self._host or ('data.' + self._host),
 			'api/' + path, '', ''
 		))
 
 		# add nonce in args (this should be the highest resolution timer you can find)
 		if auth:
 			now = datetime.datetime.now()
-			args['nonce'] = int(time.mktime(now.timetuple()) * 1e6 + now.microsecond) * 1000
+			args['tonce'] = int(time.mktime(now.timetuple()) * 1e6 + now.microsecond)
 
 		# build the query string based on our arguments
 		query = function_map_run('urlencode', args).encode('utf-8')
