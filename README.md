@@ -13,3 +13,6 @@ This repository aim to provide basic implementations of clients for the MtGox AP
 * C++/boost
 
 If you are wishing for more languages to be included, please open an issue on this repo.
+
+## License
+MIT
